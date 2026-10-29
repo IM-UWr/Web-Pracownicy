@@ -1,0 +1,88 @@
+# Pages CMS — Web-Pracownicy: Pracownicy, doktoranci i administracja.
+# Wygenerowane przy migracji z Avean/IM-Website-test; pola „Opublikowany” usunięte (bez wersji roboczych).
+media:
+  input: public/pliki
+  output: /pliki
+  rename: safe
+settings:
+  commit:
+    identity: user
+content:
+- name: pracownicy
+  label: Pracownicy
+  type: collection
+  path: src/content/pracownicy
+  format: yaml
+  filename: '{primary}.yml'
+  view:
+    fields:
+    - imie_nazwisko
+    - grupa
+    - zaklad
+    - pokoj
+    primary: imie_nazwisko
+    sort: imie_nazwisko
+  fields:
+  - name: imie_nazwisko
+    label: Imię i nazwisko
+    type: string
+    required: true
+  - name: stopien
+    label: Stopień / tytuł (np. dr hab., prof. UWr)
+    type: string
+  - name: grupa
+    label: Grupa
+    type: select
+    default: nauczyciel
+    options:
+      values:
+      - name: nauczyciel
+        label: Nauczyciele akademiccy
+      - name: doktorant
+        label: Doktoranci
+      - name: administracja
+        label: Administracja
+      - name: emeryt
+        label: Emerytowani pracownicy
+  - name: funkcja
+    label: Funkcja (np. Sekretariat dydaktyczny)
+    type: string
+  - name: zaklad
+    label: Zakład
+    type: select
+    options:
+      values:
+      - name: algebra-i-teoria-modeli
+        label: Zakład Algebry i Teorii Modeli
+      - name: analiza-funkcjonalna
+        label: Zakład Analizy Funkcjonalnej
+      - name: analiza-matematyczna
+        label: Zakład Analizy Matematycznej
+      - name: dydaktyka
+        label: Pracownia Dydaktyki i Popularyzacji Matematyki
+      - name: geometria
+        label: Zakład Geometrii
+      - name: rownania-rozniczkowe
+        label: Zakład Równań Różniczkowych
+      - name: statystyka
+        label: Zakład Statystyki
+      - name: teoria-mnogosci-i-topologia
+        label: Zakład Teorii Mnogości i Topologii
+      - name: teoria-prawdopodobienstwa
+        label: Zakład Teorii Prawdopodobieństwa
+    description: (lista z innego repozytorium — nowa pozycja wymaga dopisania w konfiguracji)
+  - name: rok_studiow
+    label: Rok studiów doktoranckich
+    type: number
+  - name: email
+    label: E-mail
+    type: string
+  - name: telefon
+    label: Telefon (tylko administracja — u pracowników naukowych nie podajemy)
+    type: string
+  - name: pokoj
+    label: Pokój
+    type: string
+  - name: strona
+    label: Strona domowa
+    type: string
