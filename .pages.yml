@@ -47,6 +47,9 @@ content:
   - name: funkcja
     label: Funkcja (np. Sekretariat dydaktyczny)
     type: string
+  - name: funkcja_en
+    label: 'EN: funkcja'
+    type: string
   - name: zaklad
     label: Zakład
     type: select
