@@ -159,7 +159,10 @@ content:
   - name: liczby
     label: Liczby pod hasłem na banerze (tylko gdy nie da się ich policzyć z danych)
     type: object
-    list: true
+    list:
+      collapsible:
+        collapsed: true
+        summary: "{n} {etykieta}"
     fields:
     - name: n
       label: Liczba (np. 8 albo 3 lata)
