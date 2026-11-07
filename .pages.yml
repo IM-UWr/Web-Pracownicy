@@ -89,3 +89,76 @@ content:
   - name: strona
     label: Strona domowa
     type: string
+- name: strony
+  label: Strony
+  description: 'Adres strony = ścieżka pliku, np. pracownicy.md → /pracownicy. Teksty stron z listą (tytuł, opis, hasło i tekst nad listą) to też strony: pracownicy.md (Pracownicy). Brak takiej strony nic nie psuje — lista pokaże domyślny tytuł i hasło, bez tekstu.'
+  type: collection
+  path: src/content/strony
+  format: yaml-frontmatter
+  subfolders: true
+  filename: '{primary}.md'
+  view:
+    fields:
+    - tytul
+    primary: tytul
+  fields:
+  - name: tytul
+    label: Tytuł
+    type: string
+    required: true
+  - name: opis
+    label: Krótki opis (pod tytułem i w Google)
+    type: text
+  - name: haslo
+    label: Hasło na banerze (jedna linia; liczby w banerze pokażą się tylko razem z hasłem)
+    type: string
+  - name: liczby
+    label: Liczby pod hasłem na banerze (tylko gdy nie da się ich policzyć z danych)
+    type: object
+    list: true
+    fields:
+    - name: n
+      label: Liczba (np. 8 albo 3 lata)
+      type: string
+      required: true
+    - name: n_en
+      label: 'EN: liczba (puste = jak po polsku)'
+      type: string
+    - name: etykieta
+      label: Podpis
+      type: string
+      required: true
+    - name: etykieta_en
+      label: 'EN: podpis'
+      type: string
+  - name: pasek_boczny
+    label: 'Prawy pasek: spis „Na tej stronie”, menu działu czy oba (puste = domyślnie tylko spis)'
+    type: select
+    options:
+      values:
+      - name: oba
+        label: Oba (spis i menu działu)
+      - name: spis
+        label: Tylko spis „Na tej stronie”
+      - name: menu
+        label: Tylko menu działu (podstrony)
+      - name: brak
+        label: Bez prawego paska (strona na całą szerokość)
+  - name: body
+    label: Treść
+    type: rich-text
+    options:
+      format: markdown
+      path: public/pliki/pracownicy
+  - name: tytul_en
+    label: 'EN: tytuł'
+    type: string
+  - name: opis_en
+    label: 'EN: opis'
+    type: text
+  - name: haslo_en
+    label: 'EN: hasło na banerze'
+    type: string
+  - name: tresc_en
+    label: 'EN: treść (Markdown)'
+    type: text
