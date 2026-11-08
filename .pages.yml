@@ -1,5 +1,4 @@
-# Pages CMS — Web-Pracownicy: Pracownicy, doktoranci i administracja.
-# Wygenerowane przy migracji z Avean/IM-Website-test; pola „Opublikowany” usunięte (bez wersji roboczych).
+# Pages CMS — formularze aktualnej strony Instytutu Matematycznego UWr.
 media:
   input: public/pliki
   output: /pliki
@@ -20,16 +19,35 @@ content:
     - grupa
     - zaklad
     - pokoj
+    - status_publikacji
     primary: imie_nazwisko
-    sort: imie_nazwisko
+    sort:
+    - imie_nazwisko
+    default:
+      sort: imie_nazwisko
+      order: asc
   fields:
   - name: imie_nazwisko
     label: Imię i nazwisko
     type: string
     required: true
+    description: Wpisz pełne imię i nazwisko. Służy także do łączenia danych tej osoby w innych działach.
+  - name: status_publikacji
+    label: Status publikacji
+    type: select
+    required: true
+    default: oficjalna
+    description: Zapisuje wybór do przyszłej publikacji. Obecnie nie zmienia widoczności. Podgląd jest publiczny.
+    options:
+      values:
+      - name: oficjalna
+        label: Opublikowana — strona oficjalna i podgląd
+      - name: podglad
+        label: Tylko podgląd
   - name: stopien
     label: Stopień / tytuł (np. dr hab., prof. UWr)
     type: string
+    description: Tytuł lub stopień pokazywany przed nazwiskiem.
   - name: grupa
     label: Grupa
     type: select
@@ -44,12 +62,15 @@ content:
         label: Administracja
       - name: emeryt
         label: Emerytowani pracownicy
+    description: Określa grupę w spisie osób; służy też do obliczania liczebności kadry.
   - name: funkcja
     label: Funkcja (np. Sekretariat dydaktyczny)
     type: string
+    description: Funkcja wyświetlana przy osobie w spisie.
   - name: funkcja_en
     label: 'EN: funkcja'
     type: string
+    description: Angielska wersja pola Funkcja (np. Sekretariat dydaktyczny); puste oznacza użycie wersji polskiej.
   - name: zaklad
     label: Zakład
     type: select
@@ -73,25 +94,39 @@ content:
         label: Zakład Teorii Mnogości i Topologii
       - name: teoria-prawdopodobienstwa
         label: Zakład Teorii Prawdopodobieństwa
-    description: (lista z innego repozytorium — nowa pozycja wymaga dopisania w konfiguracji)
+    description: Powiązanie ze stroną zakładu. Lista pochodzi z Web-Instytut; dodanie zakładu wymaga uzupełnienia
+      listy wyboru.
   - name: rok_studiow
     label: Rok studiów doktoranckich
     type: number
+    description: Rok studiów doktoranckich w spisie doktorantów.
   - name: email
     label: E-mail
     type: string
+    description: Adres e-mail do kontaktu.
   - name: telefon
     label: Telefon (tylko administracja — u pracowników naukowych nie podajemy)
     type: string
+    description: Numer telefonu do kontaktu; przy osobach spoza administracji obowiązują zasady spisu pracowników.
   - name: pokoj
     label: Pokój
     type: string
+    description: Numer lub nazwa pokoju wyświetlana w danych kontaktowych.
   - name: strona
     label: Strona domowa
     type: string
+    description: Pełny adres strony zewnętrznej, do której prowadzi link.
+  - name: opublikowany
+    label: Dotychczasowe uwzględnianie w zestawieniach
+    type: boolean
+    hidden: true
+    default: true
+    description: Zachowuje dotychczasową widoczność w zestawieniach i indeksowanie. To osobna opcja od statusu publikacji.
+  description: Spis osób oraz dane kontaktowe wykorzystywane także przy zakładach, władzach i opiekunach specjalności.
 - name: strony
   label: Strony
-  description: 'Adres strony = ścieżka pliku, np. pracownicy.md → /pracownicy. Teksty stron z listą (tytuł, opis, hasło i tekst nad listą) to też strony: pracownicy.md (Pracownicy). Brak takiej strony nic nie psuje — lista pokaże domyślny tytuł i hasło, bez tekstu.'
+  description: Strony informacyjne oraz teksty stron z listami. Adres wynika ze ścieżki pliku; nie zmieniaj nazw
+    istniejących plików. Nowe strony nie są dopisywane do menu.
   type: collection
   path: src/content/strony
   format: yaml-frontmatter
@@ -100,46 +135,42 @@ content:
   view:
     fields:
     - tytul
+    - status_publikacji
     primary: tytul
   fields:
   - name: tytul
     label: Tytuł
     type: string
     required: true
+    description: Nazwa strony lub wpisu, widoczna także na odpowiednich listach i w wynikach wyszukiwania.
+  - name: status_publikacji
+    label: Status publikacji
+    type: select
+    required: true
+    default: oficjalna
+    description: Zapisuje wybór do przyszłej publikacji. Obecnie nie zmienia widoczności. Podgląd jest publiczny.
+    options:
+      values:
+      - name: oficjalna
+        label: Opublikowana — strona oficjalna i podgląd
+      - name: podglad
+        label: Tylko podgląd
   - name: body
     label: Treść
     type: rich-text
     options:
       format: markdown
       path: public/pliki/pracownicy
-    description: |-
-      Piszesz jak w zwykłym edytorze; akapity oddziela Enter. Nagłówek 2 = nowa sekcja (pojawi się w spisie „Na tej stronie”).
-
-      Gdy włączone jest pole „Bloki” (niżej), kilka układów strona rozpoznaje sama:
-
-      • Punkt listy zaczynający się pogrubieniem = kafelek.
-
-      • Lista numerowana z pogrubionym początkiem = oś kroków.
-
-      • Punkt z rolą kursywą i nazwiskiem pogrubionym = kontakt.
-
-      • Lista samych linków = lista plików (PDF / strona).
-
-      • Nagłówek 3 zakończony znakiem „?” = rozwijane pytanie.
-
-      • Tekst nad listą (Seminaria, Konferencje, Aktualności…): lista stoi pod całym tekstem, chyba że jest kotwica — np. na stronie Publikacje tekst pod nagłówkiem 2 „Czasopisma redagowane w Instytucie” stoi nad listą czasopism.
-
-      • Plik PDF: wgraj w „Media” i wklej link.
-
-      • Akapit zaczynający się od dwuliterowego skrótu z kropką („Np.”, „Dr.”, „No.”) edytor zapisze jako listę numerowaną „1.” — zacznij akapit inaczej albo pogrub skrót.
-
-      Więcej: ściągawka edytora (dok/sciagawka-edytora.md w Web-Core).
+    description: Tekst strony; nagłówek 2 tworzy sekcję. Opcja Bloki włącza układy cech, etapów, kontaktów, plików
+      i pytań z list w tekście.
   - name: tytul_en
     label: Tytuł EN
     type: string
+    description: Angielska wersja pola Tytuł; puste oznacza użycie wersji polskiej.
   - name: tresc_en
     label: Treść EN
-    description: Cała strona po angielsku, w tym samym układzie co Treść (nagłówki sekcji po angielsku). Puste = strona angielska pokaże treść polską.
+    description: Tekst strony po angielsku; puste oznacza wyświetlanie tekstu polskiego. Układ treści jest taki
+      sam jak w polskim opisie.
     type: rich-text
     options:
       format: markdown
@@ -147,37 +178,46 @@ content:
   - name: opis
     label: Krótki opis (pod tytułem i w Google)
     type: text
+    description: Opis strony do wyszukiwarek i udostępniania linku.
   - name: opis_en
     label: 'EN: opis'
     type: text
+    description: Angielska wersja pola Krótki opis (pod tytułem i w Google); puste oznacza użycie wersji polskiej.
   - name: haslo
-    label: Hasło na banerze (jedna linia; liczby w banerze pokażą się tylko razem z hasłem)
+    label: Hasło w nagłówku
     type: string
+    description: Krótkie hasło w nagłówku, widoczne razem z liczbami. Na okładce działu służy również jako podpis.
   - name: haslo_en
     label: 'EN: hasło na banerze'
     type: string
+    description: Angielskie hasło; puste pole nie zastępuje go polskim hasłem.
   - name: liczby
     label: Liczby pod hasłem na banerze (tylko gdy nie da się ich policzyć z danych)
     type: object
     list:
       collapsible:
         collapsed: true
-        summary: "{n} {etykieta}"
+        summary: '{n} {etykieta}'
     fields:
     - name: n
       label: Liczba (np. 8 albo 3 lata)
       type: string
       required: true
+      description: Wartość w nagłówku, np. 8 albo 3 lata.
     - name: n_en
       label: 'EN: liczba (puste = jak po polsku)'
       type: string
+      description: Angielska wersja pola Liczba (np. 8 albo 3 lata); puste oznacza użycie wersji polskiej.
     - name: etykieta
       label: Podpis
       type: string
       required: true
+      description: Napis wyświetlany przy tej pozycji.
     - name: etykieta_en
       label: 'EN: podpis'
       type: string
+      description: Angielska wersja pola Podpis; puste oznacza użycie wersji polskiej.
+    description: Wartości i podpisy w nagłówku. Nie powtarzaj danych, które dana strona oblicza samodzielnie.
   - name: pasek_boczny
     label: 'Prawy pasek: spis „Na tej stronie”, menu działu czy oba (puste = domyślnie tylko spis)'
     type: select
@@ -191,8 +231,16 @@ content:
         label: Tylko menu działu (podstrony)
       - name: brak
         label: Bez prawego paska (strona na całą szerokość)
+    description: Spis sekcji jest widoczny przy opcji Spis lub Oba. Menu i Brak wyłączają spis; ta wersja strony
+      nie wyświetla bocznego menu działu.
   - name: bloki
     label: Kafelki, oś i kontakty z list — zob. ściągawka
     type: boolean
     default: false
-    description: 'Włączone: listy w treści stają się blokami (kafelki, oś kroków, kontakty, lista plików, rozwijane pytania) — opis przy polu „Treść”. Wyłączone: zwykłe listy.'
+    description: 'Włącz, aby z list w tekście powstawały bloki treści: cechy, etapy, kontakty, pliki i pytania.'
+  - name: opublikowany
+    label: Dotychczasowe uwzględnianie w zestawieniach
+    type: boolean
+    hidden: true
+    default: true
+    description: Zachowuje dotychczasową widoczność w zestawieniach i indeksowanie. To osobna opcja od statusu publikacji.
