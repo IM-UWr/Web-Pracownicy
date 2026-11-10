@@ -1,8 +1,7 @@
-imie_nazwisko: "Konrad Krystecki"
-stopien: "dr"
-grupa: "nauczyciel"
-email: "Konrad.Krystecki@math.uni.wroc.pl"
+imie_nazwisko: Konrad Krystecki
+stopien: dr
+grupa: nauczyciel
+zaklad: teoria-prawdopodobienstwa
+email: Konrad.Krystecki@math.uni.wroc.pl
 pokoj: "707"
-strona: "http://math.uni.wroc.pl/~kkrystecki"
-zaklad: "geometria"
-opublikowany: true
+strona: http://math.uni.wroc.pl/~kkrystecki
