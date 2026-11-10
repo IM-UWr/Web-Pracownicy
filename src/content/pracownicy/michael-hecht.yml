@@ -1,8 +1,7 @@
-imie_nazwisko: "Michael Hecht"
-stopien: "dr, prof. UWr"
-grupa: "nauczyciel"
-email: "Michael.Hecht@uwr.edu.pl"
+imie_nazwisko: Michael Hecht
+stopien: dr, prof. UWr
+grupa: nauczyciel
+zaklad: statystyka
+email: Michael.Hecht@uwr.edu.pl
 pokoj: "405"
-strona: "https://www.math.uni.wroc.pl/users/hecht"
-zaklad: "rownania-rozniczkowe"
-opublikowany: true
+strona: https://www.math.uni.wroc.pl/users/hecht
