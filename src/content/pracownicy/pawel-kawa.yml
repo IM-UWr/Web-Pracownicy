@@ -1,8 +1,7 @@
-imie_nazwisko: "Paweł Kawa"
-stopien: "dr"
-grupa: "nauczyciel"
-email: "Pawel.Kawa@math.uni.wroc.pl"
+imie_nazwisko: Paweł Kawa
+stopien: dr
+grupa: nauczyciel
+zaklad: teoria-prawdopodobienstwa
+email: Pawel.Kawa@math.uni.wroc.pl
 pokoj: "702"
-strona: "http://www.math.uni.wroc.pl/~pkawa/home/"
-zaklad: "teoria-mnogosci-i-topologia"
-opublikowany: true
+strona: http://www.math.uni.wroc.pl/~pkawa/home/
