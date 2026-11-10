@@ -1,8 +1,7 @@
-imie_nazwisko: "Krzysztof Omiljanowski"
-stopien: "dr"
-grupa: "nauczyciel"
-email: "Krzysztof.Omiljanowski@math.uni.wroc.pl"
+imie_nazwisko: Krzysztof Omiljanowski
+stopien: dr
+grupa: nauczyciel
+zaklad: teoria-mnogosci-i-topologia
+email: Krzysztof.Omiljanowski@math.uni.wroc.pl
 pokoj: "313"
-strona: "http://www.math.uni.wroc.pl/~komil/"
-zaklad: "dydaktyka"
-opublikowany: true
+strona: http://www.math.uni.wroc.pl/~komil/
