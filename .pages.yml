@@ -1,5 +1,6 @@
 # Pages CMS — Web-Pracownicy: Pracownicy, doktoranci i administracja.
 # Wygenerowane przy migracji z Avean/IM-Website-test; pola „Opublikowany” usunięte (bez wersji roboczych).
+# Zlecenie 33: pole „Opublikowane” wróciło w Stronach i na stronie działu (odznaczone = szkic, widoczny tylko na Podglądzie).
 media:
   input: public/pliki
   output: /pliki
@@ -106,6 +107,11 @@ content:
     label: Tytuł
     type: string
     required: true
+  - name: opublikowany
+    label: Opublikowane — widoczne na stronie publicznej (na Podglądzie widać zawsze)
+    description: Odznacz, żeby przygotować stronę bez pokazywania jej na stronie publicznej (szkic)
+    type: boolean
+    default: true
   - name: body
     label: Treść
     type: code

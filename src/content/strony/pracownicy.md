@@ -1,5 +1,6 @@
 ---
 tytul: Pracownicy
+opublikowany: true
 tytul_en: Staff
 opis: Dane kontaktowe pracowników, doktorantów i administracji Instytutu Matematycznego.
 opis_en: Contact details of the staff, PhD students and administration of the Mathematical Institute.
