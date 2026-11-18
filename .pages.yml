@@ -176,6 +176,9 @@ content:
     - name: etykieta_en
       label: 'EN: podpis'
       type: string
+    - name: pozycja
+      type: boolean
+      hidden: true
   - name: pasek_boczny
     label: 'Prawy pasek: spis „Na tej stronie”, menu działu czy oba (puste = domyślnie tylko spis)'
     type: select
