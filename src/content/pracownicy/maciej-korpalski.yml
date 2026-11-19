@@ -1,6 +1,7 @@
 imie_nazwisko: "Maciej Korpalski"
 stopien: "dr"
 grupa: "nauczyciel"
+pracuje: true
 email: "Maciej.Korpalski@math.uni.wroc.pl"
 pokoj: "506"
 strona: "https://korpalski.math.uni.wroc.pl/"

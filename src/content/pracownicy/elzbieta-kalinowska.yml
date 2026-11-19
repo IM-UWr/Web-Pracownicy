@@ -1,6 +1,7 @@
 imie_nazwisko: "Elżbieta Kalinowska"
 stopien: "dr"
 grupa: "nauczyciel"
+pracuje: true
 email: "Elzbieta.Kalinowska@math.uni.wroc.pl"
 pokoj: "314"
 strona: "http://www.math.uni.wroc.pl/~elakalin"

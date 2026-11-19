@@ -1,6 +1,7 @@
 imie_nazwisko: "Mikołaj Krupski"
 stopien: "dr"
 grupa: "nauczyciel"
+pracuje: true
 email: "Mikolaj.Krupski@math.uni.wroc.pl"
 pokoj: "708"
 strona: "https://www.math.uni.wroc.pl/users/mikrupski"

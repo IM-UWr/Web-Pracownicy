@@ -1,0 +1,93 @@
+name: Katalog pracowników w CMS
+
+# Zlecenie 42: lista wyboru osób w CMS (pola „… ze spisu”) to kopia spisu w każdym repozytorium treści z polami osób:
+# pliki _cms/pracownicy/<id>.yml (imię i nazwisko, id, etykieta, „Pracuje w Instytucie”; bez danych kontaktowych).
+# Ten automat odświeża je po zmianie spisu (push na main), raz na dobę (zapas) i ręcznie (Actions → Run workflow;
+# „na sucho” tylko wypisuje, co by zmienił). Skrypt: IM-UWr/Web-Core, skrypty/synchronizuj-katalog-pracownikow.mjs
+# (osób nie usuwa; plik znika tylko, gdy osoby nie ma w spisie i nikt się do niej nie odwołuje).
+# Commituje tylko pliki _cms/pracownicy/: zwykły commit, przy odrzuconym pushu pull --rebase i ponowienie, nigdy force-push.
+#
+# Włączenie (właściciel, raz): aplikacja organizacji z powiadom.yml (zmienna POWIADOM_APP_ID, sekret POWIADOM_KLUCZ) musi mieć
+# w instalacji dostęp do repozytoriów z listy REPOZYTORIA i uprawnienie Contents: Read and write; potem zmienna organizacji albo
+# repozytorium KATALOG_PRACOWNIKOW = wlaczony. Bez niej automat się nie uruchamia (zamiast czerwonych przebiegów), a katalog
+# odświeża się ręcznie: node skrypty/synchronizuj-katalog-pracownikow.mjs <Web-Pracownicy> <repo> … w Web-Core.
+on:
+  push:
+    branches: [main]
+    paths: ['src/content/pracownicy/**']
+  schedule:
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+    inputs:
+      na_sucho:
+        description: Tylko pokaż, co by się zmieniło (bez commitów)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: katalog-pracownikow
+  cancel-in-progress: false
+
+env:
+  REPOZYTORIA: >-
+    Web-Instytut Web-Nauka Web-Studia
+    Web-Sem-Analiza-Harmoniczna Web-Sem-Dydaktyka Web-Sem-Dyskretna-Analiza-Harmoniczna Web-Sem-Geometria
+    Web-Sem-Prawdopodobienstwo Web-Sem-Rownania-Rozniczkowe Web-Sem-Statystyka Web-Sem-Teoria-Modeli Web-Sem-Topologia
+
+jobs:
+  katalog:
+    if: vars.KATALOG_PRACOWNIKOW == 'wlaczony'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Spis pracowników
+        uses: actions/checkout@v5
+        with:
+          path: Web-Pracownicy
+      - name: Skrypt z Web-Core
+        uses: actions/checkout@v5
+        with:
+          repository: IM-UWr/Web-Core
+          path: Web-Core
+          sparse-checkout: skrypty
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Biblioteka yaml (ta sama wersja co w Web-Core)
+        run: npm install --no-save --no-package-lock --no-audit --no-fund --prefix Web-Core/skrypty yaml@2.9.1
+      - name: Klucz do repozytoriów treści
+        id: klucz
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.POWIADOM_APP_ID }}
+          private-key: ${{ secrets.POWIADOM_KLUCZ }}
+          owner: IM-UWr
+          repositories: Web-Instytut,Web-Nauka,Web-Studia,Web-Sem-Analiza-Harmoniczna,Web-Sem-Dydaktyka,Web-Sem-Dyskretna-Analiza-Harmoniczna,Web-Sem-Geometria,Web-Sem-Prawdopodobienstwo,Web-Sem-Rownania-Rozniczkowe,Web-Sem-Statystyka,Web-Sem-Teoria-Modeli,Web-Sem-Topologia
+      - name: Odśwież katalogi
+        env:
+          GH_TOKEN: ${{ steps.klucz.outputs.token }}
+          NA_SUCHO: ${{ inputs.na_sucho && '--na-sucho' || '' }}
+        run: |
+          set -eu
+          mkdir repo
+          for r in $REPOZYTORIA; do
+            git clone -q --depth 1 "https://x-access-token:${GH_TOKEN}@github.com/IM-UWr/$r.git" "repo/$r"
+          done
+          node Web-Core/skrypty/synchronizuj-katalog-pracownikow.mjs Web-Pracownicy $(for r in $REPOZYTORIA; do echo "repo/$r"; done) $NA_SUCHO | tee katalog.log
+          [ -n "$NA_SUCHO" ] && exit 0
+          for r in $REPOZYTORIA; do
+            cd "repo/$r"
+            git add -A _cms/pracownicy
+            if git diff --cached --quiet; then cd ../..; continue; fi
+            git -c user.name="Katalog pracowników (automat)" -c user.email="katalog-pracownikow@users.noreply.github.com" \
+              commit -q -m "Katalog pracowników: aktualizacja ze spisu (Web-Pracownicy ${GITHUB_SHA::7})" -- _cms/pracownicy
+            for proba in 1 2 3; do
+              if git push -q origin HEAD:main; then echo "::notice title=Katalog::$r — zapisano"; break; fi
+              [ "$proba" = 3 ] && { echo "::error title=Katalog::$r — push odrzucony 3 razy"; exit 1; }
+              git pull -q --rebase origin main
+            done
+            cd ../..
+          done

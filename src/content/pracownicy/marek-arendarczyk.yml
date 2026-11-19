@@ -1,6 +1,7 @@
 imie_nazwisko: "Marek Arendarczyk"
 stopien: "dr"
 grupa: "nauczyciel"
+pracuje: true
 email: "Marek.Arendarczyk@math.uni.wroc.pl"
 pokoj: "504"
 strona: "http://www.math.uni.wroc.pl/~marendar/index.html"

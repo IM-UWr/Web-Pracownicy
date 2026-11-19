@@ -1,6 +1,7 @@
 imie_nazwisko: "Roman Duda"
 stopien: "prof. dr hab."
 grupa: "emeryt"
+pracuje: true
 email: "Roman.Duda@math.uni.wroc.pl"
 pokoj: "408"
 strona: "https://www.math.uni.wroc.pl/users/duda"

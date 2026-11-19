@@ -1,6 +1,7 @@
 imie_nazwisko: "Piotr Kowalski"
 stopien: "prof. dr hab."
 grupa: "nauczyciel"
+pracuje: true
 email: "Piotr.Kowalski@math.uni.wroc.pl"
 pokoj: "502"
 strona: "http://www.math.uni.wroc.pl/~pkowa/index.html"

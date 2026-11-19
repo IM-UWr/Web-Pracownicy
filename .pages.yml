@@ -2,6 +2,7 @@
 # Wygenerowane przy migracji z Avean/IM-Website-test; pola „Opublikowany” usunięte (bez wersji roboczych).
 # Zlecenie 33: pole „Opublikowane” wróciło w Stronach i na stronie działu (odznaczone = szkic, widoczny tylko na Podglądzie).
 # Zlecenie 40: tekst strony Pracownicy w jawnym Markdownie (ukryte format_tresci), ściągawka przy Treści, opis formularza Pracownicy.
+# Zlecenie 42: przełącznik „Pracuje w Instytucie” (odznaczone = osoba odeszła; pliku nie usuwamy) i data odejścia; usuwanie osób w CMS wyłączone.
 media:
   input: public/pliki
   output: /pliki
@@ -12,7 +13,7 @@ settings:
 content:
 - name: pracownicy
   label: Pracownicy
-  description: "Spis osób: pracownicy, doktoranci, administracja. Widać go w Pracownikach, na stronach zakładów i przy władzach."
+  description: "Spis osób: pracownicy, doktoranci, administracja. Widać go w Pracownikach, na stronach zakładów i przy władzach. Usuwanie wyłączone: po odejściu odznacz „Pracuje w Instytucie”."
   type: collection
   path: src/content/pracownicy
   format: yaml
@@ -23,6 +24,7 @@ content:
     - grupa
     - zaklad
     - pokoj
+    - pracuje
     primary: imie_nazwisko
     sort: imie_nazwisko
   fields:
@@ -47,6 +49,15 @@ content:
         label: Administracja
       - name: emeryt
         label: Emerytowani pracownicy
+  - name: pracuje
+    label: Pracuje w Instytucie
+    description: Po odejściu odznacz. Nie usuwaj osoby — jej nazwisko zostaje przy dawnych grantach i obronach.
+    type: boolean
+    default: true
+  - name: data_odejscia
+    label: Data odejścia (opcjonalnie)
+    type: date
+    default: ""
   - name: funkcja
     label: Funkcja (np. Sekretariat dydaktyczny)
     type: string
@@ -92,6 +103,8 @@ content:
   - name: strona
     label: Strona domowa
     type: string
+  operations:
+    delete: false
 - name: strony
   label: Strony
   description: 'Adres strony = ścieżka pliku, np. pracownicy.md → /pracownicy. Teksty stron z listą (tytuł, opis, hasło i tekst nad listą) to też strony: pracownicy.md (Pracownicy). Brak takiej strony nic nie psuje — lista pokaże domyślny tytuł i hasło, bez tekstu. Treść w jawnym Markdownie, jak w Studiach.'

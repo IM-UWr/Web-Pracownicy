@@ -1,6 +1,7 @@
 imie_nazwisko: "Nadav Meir"
 stopien: "dr"
 grupa: "nauczyciel"
+pracuje: true
 email: "Nadav.Meir@math.uni.wroc.pl"
 pokoj: "508"
 strona: "http://math.uni.wroc.pl/~nadav"

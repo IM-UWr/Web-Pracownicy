@@ -1,6 +1,7 @@
 imie_nazwisko: "Jacek Świątkowski"
 stopien: "prof. dr hab."
 grupa: "nauczyciel"
+pracuje: true
 email: "Jacek.Swiatkowski@math.uni.wroc.pl"
 pokoj: "302"
 strona: "http://www.math.uni.wroc.pl/~swiatkow/"

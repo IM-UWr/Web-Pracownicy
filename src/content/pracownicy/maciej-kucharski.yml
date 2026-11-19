@@ -1,6 +1,7 @@
 imie_nazwisko: "Maciej Kucharski"
 stopien: "dr"
 grupa: "nauczyciel"
+pracuje: true
 email: "Maciej.Kucharski@math.uni.wroc.pl"
 pokoj: "714"
 strona: "http://www.math.uni.wroc.pl/~mkuchar"

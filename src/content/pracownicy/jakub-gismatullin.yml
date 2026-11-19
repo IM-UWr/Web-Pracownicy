@@ -1,6 +1,7 @@
 imie_nazwisko: "Jakub Gismatullin"
 stopien: "dr"
 grupa: "nauczyciel"
+pracuje: true
 email: "jakub.gismatullin@uwr.edu.pl"
 pokoj: "507"
 strona: "http://www.math.uni.wroc.pl/~gismat/"

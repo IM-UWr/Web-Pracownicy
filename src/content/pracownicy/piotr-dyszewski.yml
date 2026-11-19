@@ -1,6 +1,7 @@
 imie_nazwisko: "Piotr Dyszewski"
 stopien: "dr"
 grupa: "nauczyciel"
+pracuje: true
 email: "Piotr.Dyszewski@math.uni.wroc.pl"
 pokoj: "310"
 strona: "https://pdyszewski.github.io/"

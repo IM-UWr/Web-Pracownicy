@@ -1,6 +1,7 @@
 imie_nazwisko: "Wojciech Słomian"
 stopien: "dr"
 grupa: "nauczyciel"
+pracuje: true
 email: "Wojciech.Slomian@uwr.edu.pl"
 pokoj: "903"
 strona: "https://www.math.uni.wroc.pl/users/slomian"

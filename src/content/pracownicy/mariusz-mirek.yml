@@ -1,6 +1,7 @@
 imie_nazwisko: "Mariusz Mirek"
 stopien: "prof. dr hab."
 grupa: "nauczyciel"
+pracuje: true
 email: "Mariusz.Mirek@math.uni.wroc.pl"
 pokoj: "10.3"
 strona: "https://www.math.uni.wroc.pl/~mirek"

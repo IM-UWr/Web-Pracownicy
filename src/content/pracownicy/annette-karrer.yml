@@ -1,6 +1,7 @@
 imie_nazwisko: "Annette Karrer"
 stopien: "dr"
 grupa: "nauczyciel"
+pracuje: true
 email: "Annette.Karrer@uwr.edu.pl"
 pokoj: "307"
 strona: "https://www.math.uni.wroc.pl/users/karrer"
